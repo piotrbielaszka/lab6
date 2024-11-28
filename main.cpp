@@ -1,109 +1,95 @@
+#include <algorithm>
+#include "rand.hpp"
+#include <vector>
 #include <iostream>
-#include <list>
-#include "Human.hpp"
+#include <numeric>
 
 using namespace std;
 
-void add_n_humans(list<Human> &lst, const unsigned int n_hum);
-void print_list(list<Human> &lst);
-void print_list_reverse(list<Human> &lst);
-void create_humans(list<Human> &hum_list);
-void help();
-void bday(list<Human> &lst);
+constexpr auto print_vector = [](const auto &vec)
+{
+    for (const auto &el : vec)
+        cout << el << ' ';
+    cout << '\n';
+};
+
+class porownywacz
+{
+    int wartosc_graniczna;
+
+public:
+    porownywacz(int a) : wartosc_graniczna(a) {}
+    bool operator()(int x)
+    {
+        return x > wartosc_graniczna;
+    }
+};
 
 int main()
 {
-    // list<int> l1;
-    // l1.push_back(2);
-    // l1.push_front(1);
+    /// zad 1-3
+    //     vector<int> vi = makeRandomVector<int>(10, 0, 10);
+    //     print_vector(vi);
+    //     sort(vi.begin(), vi.end(), [](int a, int b)
+    //          { return a > b; });
+    //     print_vector(vi);
+    //     cout << count(vi.begin(), vi.end(), 7);
 
-    // cout << "Poczatek: " << l1.front() << "\t Adres: " << &l1.front() << "\n";
-    // cout << l1.back() << "\t Adres: " << &l1.back() << "\n";
+    /// zad 4
+    //     vector<double> vd = makeRandomVector<double>(10, 0., 10.);
+    //     print_vector(vd);
+    //     cout << count_if(vd.begin(), vd.end(), [](double a)
+    //                      { return a > 7; });
 
-    list<Human> hum_list{};
-    create_humans(hum_list);
-    string cmd;
-    while (cmd != "exit")
-    {
-        cout << "Wpisz komende: ";
-        cin >> cmd;
-        if (cmd == "add")
-            create_humans(hum_list);
-        else if (cmd == "pop")
-            hum_list.pop_back();
-        else if (cmd == "list")
-            print_list(hum_list);
-        else if (cmd == "list_rev")
-            print_list_reverse(hum_list);
-        else if (cmd == "bday")
-            bday(hum_list);
-    }
-    return 0;
-}
+    /// zad 6
+    // vector<int> vi = makeRandomVector<int>(10, 0, 10);
+    // sort(vi.begin(), vi.end());
+    // print_vector(vi);
+    // cout << "Wpisz liczbe od ktorej ma byc wieksza wartosc elementu: ";
+    // int min_a;
+    // cin >> min_a;
+    // cout << count_if(vi.begin(), vi.end(), porownywacz(min_a));
 
-void create_humans(list<Human> &hum_list)
-{
-    cout << "Wpisz ilu ludzi chcesz stworzyc: ";
-    int n_hum = 0;
-    cin >> n_hum;
+    /// zad 7
+    // vector<int> vi = makeRandomVector<int>(10, 0, 10);
+    // sort(vi.begin(), vi.end());
+    // print_vector(vi);
+    // cout << "Wpisz liczbe od ktorej ma byc wieksza wartosc elementu: ";
+    // int min_a;
+    // cin >> min_a;
+    // cout << count_if(vi.begin(), vi.end(), [&min_a](int x)
+    //                  { return x > min_a; });
 
-    add_n_humans(hum_list, n_hum);
-    print_list(hum_list);
-}
+    /// Cwiczenie 1
+    // string a;
+    // cin >> a;
+    // cout << ((adjacent_find(a.begin(), a.end()) == a.end()) ? "znaki sie nie powtarzaja\n" : "znaki sie powtarzaja\n");
 
-void help()
-{
-    cout << "Lista komend:\n";
-    cout << "help: wypisuje liste komend\n";
-    cout << "add: dodaje ludzi\n";
-    cout << "pop: usuwa ostsnia osobe\n";
-    cout << "list: wypisuje liste ludzi\n";
-    cout << "list_rev: wypisuje liste ludzi od konca\n";
-    cout << "exit: zatrzymuje program\n";
-    cout << "bday: postarza ludzi o rok\n";
-}
+    /// Cwiczenie 2
+    // string piesek = "piesek";
+    // string kotek = "kotek";
+    // cout << ((search(a.begin(), a.end(), piesek.begin(), piesek.end()) != a.end()) ? "Jest piesek\n" : "Piesek uciekl\n");
+    // cout << ((search(a.begin(), a.end(), kotek.begin(), kotek.end()) != a.end()) ? "Jest kotek\n" : "Kotek uciekl\n");
 
-void add_n_humans(list<Human> &lst, const unsigned int n_hum)
-{
-    for (unsigned int i = 0; i < n_hum; i++)
-    {
-        string name;
-        cout << "Wpisz imie czlowieka " << i << ": ";
-        cin >> name;
-        lst.emplace_back(name, 10 + i, i % 2, i % 4 == 0);
-    }
-}
+    /// Cwiczenie 3
+    // reverse(a.begin(), a.end());
+    // cout << a << "\n";
 
-void print_list(list<Human> &lst)
-{
-    // list<Human>::const_iterator it = lst.cbegin();
-    // while (it != lst.end())
-    // {
-    //     cout << "Imie: " << it->getName() << "\t Wiek: " << it->getAge() << "\t Jest potworem: " << it->isMonster() << "\n";
-    //     it++;
-    // }
-    for (Human h : lst)
-    {
-        cout << "Imie: " << h.getName() << "\t Wiek: " << h.getAge() << "\t Jest potworem: " << h.isMonster() << "\n";
-    }
-}
+    /// Cwiczenie 4
+    // vector<double> a = makeRandomVector<double>(10, 0, 10);
+    // vector<double> b = makeRandomVector<double>(10, 0, 10);
+    // cout << inner_product(a.begin(), a.end(), b.begin(), 0.);
 
-void print_list_reverse(list<Human> &lst)
-{
-    list<Human>::const_reverse_iterator it = lst.crbegin();
-    while (it != lst.rend())
-    {
-        cout << "Imie: " << it->getName() << "\t Wiek: " << it->getAge() << "\t Jest potworem: " << it->isMonster() << "\n";
-        it++;
-    }
-}
+    /// Cwiczenie 5
+    // vector<int> a = makeRandomVector<int>(10, 0, 10);
+    // print_vector(a);
+    // auto a_end = find(a.begin(), a.end(), 7);
+    // sort(a.begin(), a_end);
+    // print_vector(a);
 
-void bday(list<Human> &lst)
-{
-    auto it = lst.begin();
-    while (it != lst.end())
-    {
-        it->birthday();
-        it++;
-    }
+    /// Cwiczenie 6
+    vector<int> a = makeRandomVector<int>(10, 1, 4);
+    print_vector(a);
+    a.erase(remove(a.begin(), a.end(), 3),a.end());
+    print_vector(a);
 }
